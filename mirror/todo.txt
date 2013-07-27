@@ -1,0 +1,22 @@
+8-8:45
+    -> glass customization
+        -> append message with 'i am the greatest'
+        -> update sample APP stripping out everything I am not using
+
+    -> yelp
+        -> textbox for inserting lat / long
+        -> do lookup from YELP api and parse out first restaurant name
+        -> pass it to glass 
+
+
+
+    -> look into menu items
+    -> look at custom templates & UI guidelines
+
+
+8:45-9
+    -> presentation prep
+
+
+9-10
+    -> how to install app onto google glass?
