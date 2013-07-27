@@ -40,14 +40,12 @@ parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
     $('#basicMessage').submit(function() {
 
         var ll = $('#lat').val()+','+$('#long').val();
-        alert('ll : ' + ll);
         parameters.push(['ll', ll]);
         var message = { 
           'action': 'http://api.yelp.com/v2/search',
           'method': 'GET',
           'parameters': parameters 
         };
-
 
         OAuth.setTimestampAndNonce(message);
         OAuth.SignatureMethod.sign(message, accessor);

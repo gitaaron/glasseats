@@ -88,6 +88,15 @@ class NotifyHandler(webapp2.RequestHandler):
             body=body, media_body=media).execute()
         # Only handle the first successful action.
         break
+
+
+      if user_action.get('type') == 'REPLY':
+        reply_id = data['itemId']
+        result = self.mirror_service.timeline().get(id=reply_id).execute()
+        origional_txt = result.get('text')
+        logging.info('REPLY : %s' % origional_txt)
+
+    
       else:
         logging.info(
             "I don't know what to do with this notification: %s", user_action)

@@ -63,37 +63,17 @@ limitations under the License.
             <input type="hidden" name="operation" value="insertItem">
             <label for="lat">Latitude</label><input type="text" id="lat" name="lat" value="43.650252" />
             <label for="long">Longitude</label><input type="text" id="long" name="long" value="-79.37043" />
-            <button class="btn" type="submit">The above message</button>
+            <button class="btn" type="submit">Find a nearby restaurant</button>
           </form>
     </div>
 
-
     <div style="margin-top: 5px;">
-
-      {% for timelineItem in timelineItems %}
-      <ul class="span3 tile">
-        <li><strong>ID: </strong> {{ timelineItem.id }}
-        </li>
-        <li>
-          <strong>Text: </strong> {{ timelineItem.text }}
-        </li>
-        <li>
-          <strong>HTML: </strong> {{ timelineItem.html|e }}
-        </li>
-        <li>
-          <strong>Attachments: </strong>
-          {% for attachment in timelineItem.attachments %}
-            {% if attachment.contentType.startswith('image') %}
-            <img src="/attachmentproxy?attachment={{ attachment.id }}&timelineItem={{ timelineItem.id }}">
-            {% else %}
-            <a href="/attachmentproxy?attachment={{ attachment.id }}&timelineItem={{ timelineItem.id }}">Download</a>
-            {% endif %}
-          {% endfor %}
-        </li>
-      </ul>
-      {% endfor %}
+      <form id="sendGreeting" action="/" method="post">
+        <input type="hidden" name="operation" value="insertItemWithAction">
+        <button class="btn" type="submit">Insert greeting card.</button>
+      </form>
     </div>
-    <div style="clear:both;"></div>
+
   </div>
 
   <!-- Example row of columns -->
@@ -105,7 +85,6 @@ limitations under the License.
         these controls to insert more items into your timeline. Learn more about
         the timeline APIs
         <a href="https://developers.google.com/glass/timeline">here</a></p>
-
 
 
 
@@ -122,10 +101,7 @@ limitations under the License.
                src="/static/images/saturn-eclipse.jpg">
         </button>
       </form>
-      <form action="/" method="post">
-        <input type="hidden" name="operation" value="insertItemWithAction">
-        <button class="btn" type="submit">A card you can reply to</button>
-      </form>
+
       <hr>
       <form action="/" method="post">
         <input type="hidden" name="operation" value="insertItemAllUsers">
@@ -213,8 +189,7 @@ limitations under the License.
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/main.js"></script>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
-<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
-<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+<script type="text/javascript" src="/static/lib/oauth.js"></script>
+<script type="text/javascript" src="/static/lib/sha1.js"></script>
 </body>
 </html>

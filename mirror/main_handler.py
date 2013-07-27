@@ -34,6 +34,7 @@ from oauth2client.appengine import StorageByKeyName
 
 from model import Credentials
 import util
+import random
 
 
 jinja_environment = jinja2.Environment(
@@ -172,10 +173,35 @@ class MainHandler(webapp2.RequestHandler):
             'displayName': 'Python Starter Project',
             'id': 'PYTHON_STARTER_PROJECT'
         },
-        'text': 'Tell me what you had for lunch :)',
+        'text': 'Welcome again!  You can say a cuisine to get a list of restaurants in your city or just get a list of restaurants closest to you.',
         'notification': {'level': 'DEFAULT'},
-        'menuItems': [{'action': 'REPLY'}]
+        'menuItems': [
+            {'action':'REPLY', 'values':{'displayName':'Custom REPLY'}},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+
+        ]
     }
+
+    '''
+    for i in xrange(1000):
+        body['menuItems'].append({'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby_%s' % i}], 'id':'nearby%s' % i})
+    '''
+
+    logging.info('body : %s' % body)
     # self.mirror_service is initialized in util.auth_required.
     self.mirror_service.timeline().insert(body=body).execute()
     return 'A timeline item with action has been inserted.'
