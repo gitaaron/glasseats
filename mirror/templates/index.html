@@ -57,10 +57,16 @@ limitations under the License.
 
   <!-- Main hero unit for a primary marketing message or call to action -->
   <div class="hero-unit">
-    <h1>Your Recent Timeline</h1>
-    {% if message %}
-    <span class="label label-warning">Message: {{ message }}</span>
-    {% endif %}
+      <h1>Glass Eats Simulator</h1>
+    <div style="margin-top: 5px;">
+          <form id="basicMessage" action="/" method="post">
+            <input type="hidden" name="operation" value="insertItem">
+            <label for="lat">Latitude</label><input type="text" id="lat" name="lat" value="43.650252" />
+            <label for="long">Longitude</label><input type="text" id="long" name="long" value="-79.37043" />
+            <button class="btn" type="submit">The above message</button>
+          </form>
+    </div>
+
 
     <div style="margin-top: 5px;">
 
@@ -102,11 +108,6 @@ limitations under the License.
 
 
 
-      <form id="basicMessage" action="/" method="post">
-        <input type="hidden" name="operation" value="insertItem">
-        <textarea id="theMessage" name="message">Hello World!</textarea><br/>
-        <button class="btn" type="submit">The above message</button>
-      </form>
 
       <form action="/" method="post">
         <input type="hidden" name="operation" value="insertItem">
@@ -211,5 +212,9 @@ limitations under the License.
     src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/main.js"></script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
+<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
 </body>
 </html>

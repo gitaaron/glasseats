@@ -1,3 +1,13 @@
+2-4
+    -> subscriptions
+        -> get user's location
+        -> get an utterance
+
+
+4-6
+    -> end <-> end
+
+
 8-8:45
     -> glass customization
         -> append message with 'i am the greatest'
