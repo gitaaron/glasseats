@@ -28,6 +28,7 @@ from oauth2client.appengine import StorageByKeyName
 from model import Credentials
 import util
 
+import search_yelp
 
 class NotifyHandler(webapp2.RequestHandler):
   """Request Handler for notification pings."""
@@ -98,8 +99,28 @@ class NotifyHandler(webapp2.RequestHandler):
 
     
       else:
+        self._insert_item()
         logging.info(
-            "I don't know what to do with this notification: %s", user_action)
+            "CUSTOM I don't know what to do with this notification: %s", user_action)
+
+
+
+  def _insert_item(self):
+    """Insert a timeline item."""
+    logging.info('Inserting timeline item')
+    body = {
+        'notification': {'level': 'DEFAULT'}
+    }
+
+    response = search_yelp.make_request()
+
+    body['text'] = response.values()[2][0]['name']
+
+    media = None
+
+    # self.mirror_service is initialized in util.auth_required.
+    self.mirror_service.timeline().insert(body=body, media_body=media).execute()
+    return  'A timeline item has been inserted.'
 
 
 NOTIFY_ROUTES = [
