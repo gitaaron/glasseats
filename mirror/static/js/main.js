@@ -47,6 +47,7 @@ parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
           'parameters': parameters 
         };
 
+
         OAuth.setTimestampAndNonce(message);
         OAuth.SignatureMethod.sign(message, accessor);
         var parameterMap = OAuth.getParameterMap(message.parameters);

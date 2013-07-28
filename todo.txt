@@ -1,3 +1,9 @@
+-> read metadata for CUSTOM response in callback to get the ID
+    -> first menu item gives sushi results + location from glass API
+    -> second menu item gives burger results + hard coded location
+
+
+
 2-4
     -> subscriptions
         -> get user's location
@@ -26,7 +32,6 @@
 
 8:45-9
     -> presentation prep
-
 
 9-10
     -> how to install app onto google glass?

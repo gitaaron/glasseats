@@ -35,7 +35,7 @@ from oauth2client.appengine import StorageByKeyName
 from model import Credentials
 import util
 import random
-
+import search_yelp
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -150,6 +150,8 @@ class MainHandler(webapp2.RequestHandler):
       body['html'] = [self.request.get('message')]
     else:
       body['text'] = self.request.get('message')
+
+
 
     media_link = self.request.get('imageUrl')
     if media_link:
