@@ -111,8 +111,6 @@ class MainHandler(webapp2.RequestHandler):
         'insertSubscription': self._insert_subscription,
         'deleteSubscription': self._delete_subscription,
         'insertGreeting': self._insert_greeting,
-        'insertYelpBundle': self._insert_yelp_bundle,
-        'insertYelpBundleAsTask':self._insert_yelp_bundle_as_task,
         'insertYelpBundleWithFoodType': self._insert_yelp_bundle_with_food_type,
         'insertItemAllUsers': self._insert_item_all_users,
         'insertContact': self._insert_contact,
@@ -125,9 +123,6 @@ class MainHandler(webapp2.RequestHandler):
     # Store the flash message for 5 seconds.
     memcache.set(key=self.userid, value=message, time=5)
     self.redirect('/')
-
-  def _insert_yelp_bundle_as_task(self):
-      pass
 
   def _insert_subscription(self):
     """Subscribe the app."""
@@ -150,14 +145,9 @@ class MainHandler(webapp2.RequestHandler):
   def _insert_greeting(self):
     return greeting.insert_item(self.mirror_service)
 
-  def _insert_yelp_bundle(self):
-    """Insert a timeline item user can reply to."""
-    return yelp_bundle.insert_item(self.mirror_service)
-
-
   def _insert_yelp_bundle_with_food_type(self):
-    return yelp_bundle.insert_item(self.mirror_service, food_type='Sushi')
-
+    food_type = self.request.get('food_type')
+    return yelp_bundle.insert_worker(self.mirror_service, food_type=food_type)
 
   def _insert_item_all_users(self):
     """Insert a timeline item to all authorized users."""

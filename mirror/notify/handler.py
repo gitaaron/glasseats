@@ -97,22 +97,15 @@ class NotifyHandler(webapp2.RequestHandler):
         origional_txt = result.get('text')
         logging.info('REPLY : %s' % origional_txt)
 
-      elif user_action.get('type') == 'CUSTOM' and user_action.get('payload')== 'burgers':
-        logging.info('CUSTOM burgers')
-        yelp_bundle.insert_item(self.mirror_service, food_type='Burger')
-      elif user_action.get('type') == 'CUSTOM' and user_action.get('payload') == 'pizza':
-        logging.info('CUSTOM pizza')
-        yelp_bundle.insert_item(self.mirror_service, food_type='Pizza')
-      elif user_action.get('type') == 'CUSTOM' and user_action.get('payload') == 'mexican':
-        logging.info('CUSTOM mexican')
-        yelp_bundle.insert_item(self.mirror_service, food_type='Mexican')
       elif user_action.get('type') == 'CUSTOM' and user_action.get('payload') == 'nearby':
         logging.info('CUSTOM nearby')
-        yelp_bundle.insert_item(self.mirror_service)
+        yelp_bundle.insert_worker(self.mirror_service)
       
       else:
         logging.info(
-            "CUSTOM I don't know what to do with this notification: %s", user_action)
+            "CUSTOM it must have a food type: %s", user_action)
+        yelp_bundle.insert_worker(self.mirror_service, food_type=user_action.get('payload'))
+
 
 
 

@@ -30,11 +30,12 @@ from oauth.handler import OAUTH_ROUTES
 from signout.handler import SIGNOUT_ROUTES
 from location.handler import LOCATION_ROUTES
 from datastore.handler import DATASTORE_ROUTES
+from my_queue.handler import QUEUE_ROUTES
 
 
 ROUTES = (
     ATTACHMENT_PROXY_ROUTES + MAIN_ROUTES + NOTIFY_ROUTES + OAUTH_ROUTES +
-    SIGNOUT_ROUTES + LOCATION_ROUTES + DATASTORE_ROUTES)
+    SIGNOUT_ROUTES + LOCATION_ROUTES + QUEUE_ROUTES)
 
 
 app = webapp2.WSGIApplication(ROUTES)

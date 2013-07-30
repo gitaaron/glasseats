@@ -58,21 +58,12 @@ limitations under the License.
   <!-- Main hero unit for a primary marketing message or call to action -->
   <div class="hero-unit">
       <h1>Glass Eats Simulator</h1>
-    <div style="margin-top: 5px;">
-      <form action="/" method="post">
-        <input type="hidden" name="operation" value="insertYelpBundle">
-        <label for="lat">Latitude</label><input type="text" id="lat" name="lat" value="43.650252" />
-        <label for="long">Longitude</label><input type="text" id="long" name="long" value="-79.37043" />
-        <button class="btn" type="submit">Find a nearby restaurant</button>
-      </form>
-    </div>
 
     <div style="margin-top: 5px;">
       <form action="/" method="post">
         <input type="hidden" name="operation" value="insertYelpBundleWithFoodType">
-        <label for="lat">Latitude</label><input type="text" id="lat" name="lat" value="43.650252" />
-        <label for="long">Longitude</label><input type="text" id="long" name="long" value="-79.37043" />
-        <button class="btn" type="submit">Find a nearby sushi restaurant</button>
+        <label for="food_type">Food type</label><input type="text" name="food_type" value="Indian" />
+        <button class="btn" type="submit">Find a nearby restaurant by food type</button>
       </form>
     </div>
 

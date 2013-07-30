@@ -2,9 +2,11 @@ import logging
 import search_yelp
 import uuid
 from apiclient import errors
+from google.appengine.api import taskqueue
 
 
-def _insert_job(mirror_service, food_type):
+
+def insert_worker(mirror_service, food_type=None):
 
     try:
         location = mirror_service.locations().get(id='latest').execute()
@@ -41,11 +43,9 @@ def _insert_job(mirror_service, food_type):
 
 
 
-def insert_item(mirror_service, food_type=None):
+def insert_handler(mirror_service, food_type=None):
     '''Inserting the yelp bundle into the timeline'''
-    logging.info('zap1')
-    #thread.start_new_thread(_insert_job, (mirror_service, food_type))
-    logging.info('zap2')
-    _insert_job(mirror_service, food_type) 
+    logging.info('insert_handler')
+    taskqueue.add(url='/', params={'operation':'insertYelpBundleWithFoodType'})
 
     return 'The bundle item has been inserted'
