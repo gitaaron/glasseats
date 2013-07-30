@@ -10,7 +10,7 @@ def insert_worker(mirror_service, food_type=None):
 
     try:
         location = mirror_service.locations().get(id='latest').execute()
-        latlong = location.get('latitude') + ',' + location.get('longitude')
+        latlong = '%s,%s' % (location.get('latitude'), location.get('longitude'))
     except errors.HttpError, e:
         latlong = None
 

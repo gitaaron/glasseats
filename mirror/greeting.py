@@ -24,7 +24,7 @@ def insert_item(mirror_service):
             {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Korean', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Korean.png'}], 'id':'korean'},
             {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Thai', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Thai.png'}], 'id':'thai'},
             {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Vegetarian', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Vegetarian.png'}], 'id':'vegetarian'},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Breakfast & Brunch', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Breakfast_Brunch.png'}], 'id':'breakfast & brunch'},
+            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Brunch', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Breakfast_Brunch.png'}], 'id':'breakfast & brunch'},
             {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Cafes', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Cafe.png'}], 'id':'cafes'},
             {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Pizza', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Pizza.png'}], 'id':'pizza'},
             {'action':'DELETE'}

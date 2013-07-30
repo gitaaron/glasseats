@@ -8,11 +8,12 @@ next
     -> implement design of search result card
     -> additional menu items (food items)
 
-
 ---
     -> bundle many search results
     -> navigation and call actions on search result
     -> pin greeting card
+    -> send location not found error message instead of hardcoding to kensington
+    -> handle error / connection errors at each step and send error message
 
 next 2
     -> voice search
