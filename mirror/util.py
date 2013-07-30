@@ -23,6 +23,7 @@ import httplib2
 from apiclient.discovery import build
 from oauth2client.appengine import StorageByKeyName
 import sessions
+import logging
 
 from model import Credentials
 
@@ -43,6 +44,7 @@ def load_session_credentials(request_handler):
   """Load credentials from the current session."""
   session = sessions.LilCookies(request_handler, SESSION_SECRET)
   userid = session.get_secure_cookie(name='userid')
+  logging.info('userid : %s' % userid)
   if userid:
     return userid, StorageByKeyName(Credentials, userid, 'credentials').get()
   else:

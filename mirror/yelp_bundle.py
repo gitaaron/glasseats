@@ -25,10 +25,10 @@ def insert_worker(mirror_service, food_type=None):
     }
 
     is_first = True
-    for i in xrange(1):
+    for i in xrange(5):
         #body['bundleId'] = str(uuid.uuid1())
-        #body['bundleId'] = 'bundleId1'
-        #body['isBundleCover'] = is_first
+        body['bundleId'] = 'bundleId2'
+        body['isBundleCover'] = is_first
         is_first = False
         if food_type:
             body['text']='%s : %s' % (food_type, response.values()[2][i]['name'])
@@ -43,9 +43,8 @@ def insert_worker(mirror_service, food_type=None):
 
 
 
-def insert_handler(mirror_service, food_type=None):
+def insert_handler(food_type, user_id):
     '''Inserting the yelp bundle into the timeline'''
-    logging.info('insert_handler')
-    taskqueue.add(url='/', params={'operation':'insertYelpBundleWithFoodType'})
+    taskqueue.add(url='/yelp_item', params={'user_id':user_id, 'food_type':food_type})
 
     return 'The bundle item has been inserted'

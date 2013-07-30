@@ -64,6 +64,23 @@ class _BatchCallback(object):
       logging.error(
           'Failed to insert item for user %s: %s', request_id, exception)
 
+class MainAnonymousHandler(webapp2.RequestHandler):
+
+    def _render_template(self, message=None):
+        """Render the main page template."""
+        template_values = {}
+        if message:
+          template_values['message'] = message
+
+        template = jinja_environment.get_template('templates/not_authed.html')
+        self.response.out.write(template.render(template_values))
+
+
+    def get(self):
+        """Render the main page."""
+        # Get the flash message and delete it.
+        self._render_template()
+
 
 class MainHandler(webapp2.RequestHandler):
   """Request Handler for the main endpoint."""
@@ -147,7 +164,7 @@ class MainHandler(webapp2.RequestHandler):
 
   def _insert_yelp_bundle_with_food_type(self):
     food_type = self.request.get('food_type')
-    return yelp_bundle.insert_worker(self.mirror_service, food_type=food_type)
+    return yelp_bundle.insert_handler(food_type, self.userid)
 
   def _insert_item_all_users(self):
     """Insert a timeline item to all authorized users."""
@@ -206,5 +223,6 @@ class MainHandler(webapp2.RequestHandler):
 
 MAIN_ROUTES = [
     ('/', MainHandler),
-    ('/sim', MainHandler)
+    ('/sim', MainHandler),
+    ('/not_authed', MainAnonymousHandler)
 ]

@@ -39,6 +39,7 @@ class NotifyHandler(webapp2.RequestHandler):
     logging.info('Got a notification with payload %s', self.request.body)
     data = json.loads(self.request.body)
     userid = data['userToken']
+    self.userid = userid
     # TODO: Check that the userToken is a valid userToken.
     self.mirror_service = util.create_service(
         'mirror', 'v1',
@@ -99,12 +100,12 @@ class NotifyHandler(webapp2.RequestHandler):
 
       elif user_action.get('type') == 'CUSTOM' and user_action.get('payload') == 'nearby':
         logging.info('CUSTOM nearby')
-        yelp_bundle.insert_worker(self.mirror_service)
+        yelp_bundle.insert_handler(None, self.userid)
       
       else:
         logging.info(
             "CUSTOM it must have a food type: %s", user_action)
-        yelp_bundle.insert_worker(self.mirror_service, food_type=user_action.get('payload'))
+        yelp_bundle.insert_handler(user_action.get('payload'), self.userid)
 
 
 

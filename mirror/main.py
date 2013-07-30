@@ -31,11 +31,12 @@ from signout.handler import SIGNOUT_ROUTES
 from location.handler import LOCATION_ROUTES
 from datastore.handler import DATASTORE_ROUTES
 from my_queue.handler import QUEUE_ROUTES
+from yelp_item.handler import YELP_ITEM_ROUTES
 
 
 ROUTES = (
     ATTACHMENT_PROXY_ROUTES + MAIN_ROUTES + NOTIFY_ROUTES + OAUTH_ROUTES +
-    SIGNOUT_ROUTES + LOCATION_ROUTES + QUEUE_ROUTES)
+    SIGNOUT_ROUTES + LOCATION_ROUTES + QUEUE_ROUTES + YELP_ITEM_ROUTES)
 
 
 app = webapp2.WSGIApplication(ROUTES)
