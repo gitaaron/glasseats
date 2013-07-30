@@ -6,48 +6,6 @@ import optparse
 import urllib
 import urllib2
 
-'''
-parser = optparse.OptionParser()
-parser.add_option('-c', '--consumer_key', dest='consumer_key', help='OAuth consumer key (REQUIRED)')
-parser.add_option('-s', '--consumer_secret', dest='consumer_secret', help='OAuth consumer secret (REQUIRED)')
-parser.add_option('-t', '--token', dest='token', help='OAuth token (REQUIRED)')
-parser.add_option('-e', '--token_secret', dest='token_secret', help='OAuth token secret (REQUIRED)')
-parser.add_option('-a', '--host', dest='host', help='Host', default='api.yelp.com')
-
-parser.add_option('-q', '--term', dest='term', help='Search term')
-parser.add_option('-l', '--location', dest='location', help='Location (address)')
-parser.add_option('-b', '--bounds', dest='bounds', help='Bounds (sw_latitude,sw_longitude|ne_latitude,ne_longitude)')
-parser.add_option('-p', '--point', dest='point', help='Latitude,longitude')
-# Not sure if current location hints are currently working
-parser.add_option('-i', '--current_location', dest='current_location', help='Current location latitude,longitude for location disambiguation')
-
-parser.add_option('-o', '--offset', dest='offset', help='Offset (starting position)')
-parser.add_option('-r', '--limit', dest='limit', help='Limit (number of results to return)')
-parser.add_option('-u', '--cc', dest='cc', help='Country code')
-parser.add_option('-n', '--lang', dest='lang', help='Language code')
-
-parser.add_option('-d', '--radius', dest='radius', help='Radius filter (in meters)')
-parser.add_option('-g', '--category', dest='category', help='Category filter')
-parser.add_option('-z', '--deals', dest='deals', help='Deals filter')
-parser.add_option('-m', '--sort', dest='sort', help='Sort')
-
-
-options, args = parser.parse_args()
-
-# Required options
-if not options.consumer_key:
-  parser.error('--consumer_key required')
-if not options.consumer_secret:
-  parser.error('--consumer_secret required')
-if not options.token:
-  parser.error('--token required')
-if not options.token_secret:
-  parser.error('--token_secret required')
-
-if not options.location and not options.bounds and not options.point:
-  parser.error('--location, --bounds, or --point required')
-'''
-
 url_params = {
     'll':'43.654863,-79.401372',
     'term':'food'
@@ -60,37 +18,6 @@ options = {
     'token_secret':'PY0NIPzKyBeU4Y1aM4qMVR8GgcY',
     'host':'api.yelp.com'
 }
-
-# Setup URL params from options
-'''
-url_params = {}
-if options.term:
-  url_params['term'] = options.term
-if options.location:
-  url_params['location'] = options.location
-if options.bounds:
-  url_params['bounds'] = options.bounds
-if options.point:
-  url_params['ll'] = options.point
-if options.offset:
-  url_params['offset'] = options.offset
-if options.limit:
-  url_params['limit'] = options.limit
-if options.cc:
-  url_params['cc'] = options.cc
-if options.lang:
-  url_params['lang'] = options.lang
-if options.current_location:
-  url_params['cll'] = options.current_location
-if options.radius:
-  url_params['radius_filter'] = options.radius
-if options.category:
-  url_params['category_filter'] = options.category
-if options.deals:
-  url_params['deals_filter'] = options.deals
-if options.sort:
-  url_params['sort'] = options.sort
-'''
 
 
 def request(host, path, url_params, consumer_key, consumer_secret, token, token_secret):
@@ -128,7 +55,8 @@ def request(host, path, url_params, consumer_key, consumer_secret, token, token_
   return response
 
 
-def make_request(term=None):
+def make_request(location=None, term=None):
+    if location: url_params['ll'] = location
     if term: url_params['term'] = term
     response = request(options['host'], '/v2/search', url_params, options['consumer_key'], options['consumer_secret'], options['token'], options['token_secret'])
     #print json.dumps(response, sort_keys=True, indent=2)

@@ -1,13 +1,20 @@
 import logging
 import search_yelp
 import uuid
+from apiclient import errors
 
 
 def _insert_job(mirror_service, food_type):
-    logging.info('zip1')
-    response = search_yelp.make_request(term=food_type)
-    logging.info('zip2')
 
+    try:
+        location = mirror_service.locations().get(id='latest').execute()
+        latlong = location.get('latitude') + ',' + location.get('longitude')
+    except errors.HttpError, e:
+        latlong = None
+
+    logging.info('location %s' % latlong)
+
+    response = search_yelp.make_request(latlong, term=food_type)
 
     body = { 
         'menuItems': [
