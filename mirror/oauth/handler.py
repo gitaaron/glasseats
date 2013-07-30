@@ -27,6 +27,7 @@ from oauth2client.client import FlowExchangeError
 
 from model import Credentials
 import util
+import greeting
 
 
 SCOPES = ('https://www.googleapis.com/auth/glass.timeline '
@@ -93,7 +94,7 @@ class OAuthCodeExchangeHandler(OAuthBaseRequestHandler):
     util.store_userid(self, userid)
 
     self._perform_post_auth_tasks(userid, creds)
-    self.redirect('/')
+    self.redirect('http://www.glasseats.com/thank-you/')
 
   def _perform_post_auth_tasks(self, userid, creds):
     """Perform commong post authorization tasks.
@@ -108,7 +109,9 @@ class OAuthCodeExchangeHandler(OAuthBaseRequestHandler):
     mirror_service = util.create_service('mirror', 'v1', creds)
     hostname = util.get_full_url(self, '')
 
-    # Only do the post auth tasks when deployed.
+
+
+    # Only do these post auth tasks when deployed.
     if hostname.startswith('https://'):
       # Insert a subscription.
       subscription_body = {
@@ -121,22 +124,17 @@ class OAuthCodeExchangeHandler(OAuthBaseRequestHandler):
 
       # Insert a sharing contact.
       contact_body = {
-          'id': 'Python Quick Start',
-          'displayName': 'Python Quick Start',
+          'id': 'Glass Eats',
+          'displayName': 'Glass Eats',
           'imageUrls': [util.get_full_url(self, '/static/images/python.png')]
       }
       mirror_service.contacts().insert(body=contact_body).execute()
     else:
       logging.info('Post auth tasks are not supported on staging.')
 
+
     # Insert welcome message.
-    timeline_item_body = {
-        'text': 'Welcome to the Python Quick Start',
-        'notification': {
-            'level': 'DEFAULT'
-        }
-    }
-    mirror_service.timeline().insert(body=timeline_item_body).execute()
+    greeting.insert_item(mirror_service) 
 
 
 OAUTH_ROUTES = [

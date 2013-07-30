@@ -35,7 +35,9 @@ from oauth2client.appengine import StorageByKeyName
 from model import Credentials
 import util
 import random
-import search_yelp
+import greeting
+import yelp_bundle
+
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -108,8 +110,10 @@ class MainHandler(webapp2.RequestHandler):
     operations = {
         'insertSubscription': self._insert_subscription,
         'deleteSubscription': self._delete_subscription,
-        'insertItem': self._insert_item,
-        'insertItemWithAction': self._insert_item_with_action,
+        'insertGreeting': self._insert_greeting,
+        'insertYelpBundle': self._insert_yelp_bundle,
+        'insertYelpBundleAsTask':self._insert_yelp_bundle_as_task,
+        'insertYelpBundleWithFoodType': self._insert_yelp_bundle_with_food_type,
         'insertItemAllUsers': self._insert_item_all_users,
         'insertContact': self._insert_contact,
         'deleteContact': self._delete_contact
@@ -121,6 +125,9 @@ class MainHandler(webapp2.RequestHandler):
     # Store the flash message for 5 seconds.
     memcache.set(key=self.userid, value=message, time=5)
     self.redirect('/')
+
+  def _insert_yelp_bundle_as_task(self):
+      pass
 
   def _insert_subscription(self):
     """Subscribe the app."""
@@ -140,73 +147,17 @@ class MainHandler(webapp2.RequestHandler):
     self.mirror_service.subscriptions().delete(id=collection).execute()
     return 'Application has been unsubscribed.'
 
-  def _insert_item(self):
-    """Insert a timeline item."""
-    logging.info('Inserting timeline item')
-    body = {
-        'notification': {'level': 'DEFAULT'}
-    }
-    if self.request.get('html') == 'on':
-      body['html'] = [self.request.get('message')]
-    else:
-      body['text'] = self.request.get('message')
+  def _insert_greeting(self):
+    return greeting.insert_item(self.mirror_service)
 
-
-
-    media_link = self.request.get('imageUrl')
-    if media_link:
-      if media_link.startswith('/'):
-        media_link = util.get_full_url(self, media_link)
-      resp = urlfetch.fetch(media_link, deadline=20)
-      media = MediaIoBaseUpload(
-          io.BytesIO(resp.content), mimetype='image/jpeg', resumable=True)
-    else:
-      media = None
-
-    # self.mirror_service is initialized in util.auth_required.
-    self.mirror_service.timeline().insert(body=body, media_body=media).execute()
-    return  'A timeline item has been inserted.'
-
-  def _insert_item_with_action(self):
+  def _insert_yelp_bundle(self):
     """Insert a timeline item user can reply to."""
-    logging.info('Inserting timeline item')
-    body = {
-        'creator': {
-            'displayName': 'Python Starter Project',
-            'id': 'PYTHON_STARTER_PROJECT'
-        },
-        'text': 'Welcome again!  You can say a cuisine to get a list of restaurants in your city or just get a list of restaurants closest to you.',
-        'notification': {'level': 'DEFAULT'},
-        'menuItems': [
-            {'action':'REPLY', 'values':{'displayName':'Custom REPLY'}},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
-            {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby.'}], 'id':'nearby%s' % random.random()},
+    return yelp_bundle.insert_item(self.mirror_service)
 
-        ]
-    }
 
-    '''
-    for i in xrange(1000):
-        body['menuItems'].append({'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby_%s' % i}], 'id':'nearby%s' % i})
-    '''
+  def _insert_yelp_bundle_with_food_type(self):
+    return yelp_bundle.insert_item(self.mirror_service, food_type='Sushi')
 
-    logging.info('body : %s' % body)
-    # self.mirror_service is initialized in util.auth_required.
-    self.mirror_service.timeline().insert(body=body).execute()
-    return 'A timeline item with action has been inserted.'
 
   def _insert_item_all_users(self):
     """Insert a timeline item to all authorized users."""
@@ -264,5 +215,6 @@ class MainHandler(webapp2.RequestHandler):
 
 
 MAIN_ROUTES = [
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/sim', MainHandler)
 ]

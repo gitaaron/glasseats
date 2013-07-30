@@ -128,7 +128,8 @@ def request(host, path, url_params, consumer_key, consumer_secret, token, token_
   return response
 
 
-def make_request():
+def make_request(term=None):
+    if term: url_params['term'] = term
     response = request(options['host'], '/v2/search', url_params, options['consumer_key'], options['consumer_secret'], options['token'], options['token_secret'])
     #print json.dumps(response, sort_keys=True, indent=2)
     d = response.values()[2]

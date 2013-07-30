@@ -1,6 +1,62 @@
--> read metadata for CUSTOM response in callback to get the ID
-    -> first menu item gives sushi results + location from glass API
-    -> second menu item gives burger results + hard coded location
+bugs
+    -> callback timeout goes into infinite loop
+    -> notification not sounding when search result comes in
+
+
+next
+    -> make location dynamic
+    -> implement design of search result card
+    -> additional menu items (food items)
+
+
+---
+    -> bundle many search results
+    -> navigation and call actions on search result
+    -> pin greeting card
+
+next 2
+    -> voice search
+
+
+----
+
+# auth flow
+    -> send greeting then redirect back to glasseats.com
+    -> separate page for /simulator
+
+# send greeting
+    -> three menu items with different icons
+        -> nearby
+        -> burgers
+        -> pizza
+
+# callback
+    -> read metadata for CUSTOM response in callback to get the ID
+        -> first menu item just queries for food + location from glass API
+        -> first menu item gives sushi results + location from glass API
+        -> second menu item gives burger results + hard coded location
+
+    -> handle error in glass location
+    
+# query yelp
+    -> handle no results by sending error message
+    -> handle server error by sending error message
+    -> handle results by sending bundled cards
+
+# send bundled cards
+    -> just restaurant name on each
+    -> call or navigate menu items
+
+# fix content of bundled cards
+
+
+----
+
+-> menu icons
+-> bundled cards for send yelp
+-> location dynamic
+-> add food type to search term
+
 
 
 
