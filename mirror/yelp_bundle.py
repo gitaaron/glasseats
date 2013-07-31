@@ -25,18 +25,36 @@ def insert_worker(mirror_service, food_type=None):
     }
 
     is_first = True
-    for i in xrange(5):
-        #body['bundleId'] = str(uuid.uuid1())
-        body['bundleId'] = 'bundleId2'
-        body['isBundleCover'] = is_first
-        is_first = False
-        if food_type:
-            body['text']='%s : %s' % (food_type, response.values()[2][i]['name'])
-        else: 
-            body['text']=response.values()[2][i]['name']
 
+
+
+    for i in xrange(10):
+        body['bundleId'] = str(uuid.uuid1()).replace('-','')
+        #body['bundleId'] = 'bundleId3'
+        body['isBundleCover'] = is_first
+
+
+        if is_first:
+            body['html'] = '<article class=\"photo\">\n<img src=\"https://glasseats.appspot.com/static/images/GlassHomeRestaurantResults.png\" width=\"100%\" height=\"100%\">\n  <div class=\"photo-overlay\"/>\n  <section>\n</section>\n</article>\n'
+
+        else:
+            if food_type:
+                body['text']='%s : %s' % (food_type, response.values()[2][i]['name'])
+            else: 
+                body['text']=response.values()[2][i]['name']
+
+        is_first = False
 
         mirror_service.timeline().insert(body=body).execute()
+
+        try:
+            del body['html']
+        except KeyError:
+            pass
+        try:
+            del body['text']
+        except KeyError:
+            pass
 
 
     logging.info('zip3')

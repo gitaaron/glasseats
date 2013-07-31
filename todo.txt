@@ -1,10 +1,16 @@
+done
+    -> make location dynamic
+
 bugs
     -> callback timeout goes into infinite loop
     -> notification not sounding when search result comes in
 
 
+    -> unicode yelp result error with cafes kensington
+    -> bundle id hardcoded
+
+
 next
-    -> make location dynamic
     -> implement design of search result card
     -> additional menu items (food items)
 
