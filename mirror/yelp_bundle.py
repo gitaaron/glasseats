@@ -38,10 +38,29 @@ def insert_worker(mirror_service, food_type=None):
             body['html'] = '<article class=\"photo\">\n<img src=\"https://glasseats.appspot.com/static/images/GlassHomeRestaurantResults.png\" width=\"100%\" height=\"100%\">\n  <div class=\"photo-overlay\"/>\n  <section>\n</section>\n</article>\n'
 
         else:
-            if food_type:
-                body['text']='%s : %s' % (food_type, response.values()[2][i]['name'])
-            else: 
-                body['text']=response.values()[2][i]['name']
+            resto = response.values()[2][i]
+            try:
+                image_url = resto['image_url'].replace('ms.jpg', 'l.jpg')
+            except KeyError:
+                image_url = None
+            address = resto['location']['display_address'][0] +','+resto['location']['city']
+            category = resto['categories'][0][0]
+            phone_number = resto['phone']
+            rating_url = resto['rating_img_url']
+            if image_url:
+                if food_type:
+                    body['html'] = '<article class=\"photo\">\n<img src=\"' + image_url + '\" width=\"100%\" height=\"100%\">\n  <div class=\"photo-overlay\"/>\n  <section>\n    <p class=\"align-center text-auto-size\">' + resto['name'] + '<br />Category: '+category+'<br />'+address+'<br/>'+phone_number+'<br/><img src=\"'+rating_url+'\" /></p>\n  </section>\n</article>\n'
+
+                else: 
+                    body['html'] = '<article class=\"photo\">\n<img src=\"' + image_url + '\" width=\"100%\" height=\"100%\">\n  <div class=\"photo-overlay\"/>\n  <section>\n    <p class=\"align-center text-auto-size\">' + resto['name'] + '<br />'+address+'<br/>'+phone_number+'<br/><img src=\"'+rating_url+'\" /></p>\n  </section>\n</article>\n'
+            else:
+                if food_type:
+                    body['html'] = '<article class=\"photo\">\n <div class=\"photo-overlay\"/>\n  <section>\n    <p class=\"align-center text-auto-size\">' + resto['name'] + '<br />Category: '+category+'<br />'+address+'<br/>'+phone_number+'<br/><img src=\"'+rating_url+'\" /></p>\n  </section>\n</article>\n'
+
+                else: 
+                    body['html'] = '<article class=\"photo\">\n <div class=\"photo-overlay\"/>\n  <section>\n    <p class=\"align-center text-auto-size\">' + resto['name'] + '<br />'+address+'<br/>'+phone_number+'<br/><img src=\"'+rating_url+'\" /></p>\n  </section>\n</article>\n'
+
+
 
         is_first = False
 

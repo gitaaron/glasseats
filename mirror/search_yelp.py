@@ -61,7 +61,7 @@ def make_request(location=None, term=None):
     response = request(options['host'], '/v2/search', url_params, options['consumer_key'], options['consumer_secret'], options['token'], options['token_secret'])
     #print json.dumps(response, sort_keys=True, indent=2)
     d = response.values()[2]
-    print d[0]['name']
+    print '%s' % d[0]
     return response
 
 if __name__=='__main__':
