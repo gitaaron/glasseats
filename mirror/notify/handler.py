@@ -99,12 +99,14 @@ class NotifyHandler(webapp2.RequestHandler):
         logging.info('REPLY : %s' % origional_txt)
 
       elif user_action.get('type') == 'CUSTOM' and user_action.get('payload') == 'nearby':
-        logging.info('CUSTOM nearby')
-        yelp_bundle.insert_handler(None, self.userid)
+        logging.info('CUSTOM nearby user_id : %s' % self.userid)
+        yelp_bundle.insert_handler('food', self.userid)
       
       else:
         logging.info(
             "CUSTOM it must have a food type: %s", user_action)
+        logging.info('CUSTOM user_id : %s' % self.userid)
+
         yelp_bundle.insert_handler(user_action.get('payload'), self.userid)
 
 

@@ -39,3 +39,5 @@ nosetests.xml
 
 *.swp
 .DS_Store
+
+mirror/client_secrets.json

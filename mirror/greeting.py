@@ -1,4 +1,5 @@
 import logging
+import uuid
 
 def insert_item(mirror_service):
     '''Insert a greeting into the timeline.'''
@@ -9,8 +10,9 @@ def insert_item(mirror_service):
             'id':'Glass Eats'
         },
 
-        'html':'<article class=\"photo\">\n<img src=\"https://glasseats.appspot.com/static/images/GlassHomeScreen.png\" width=\"100%\" height=\"100%\">\n  <div class=\"photo-overlay\"/>\n  <section>\n</section>\n</article>\n',
+        'html':'<article class=\"photo\">\n<img src=\"https://glasseats.appspot.com/static/images/GlassHomeScreen.png?r='+str(uuid.uuid1()).replace('-','')+'\" width=\"100%\" height=\"100%\">\n  <div class=\"photo-overlay\"/>\n  <section>\n</section>\n</article>\n',
         'menuItems': [
+            {'action':'TOGGLE_PINNED'},
             {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Nearby', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Nearby.png'}], 'id':'nearby'},
             {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Burgers', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Burger.png'}], 'id':'burgers'},
             {'action':'CUSTOM', 'values':[{'state':'DEFAULT', 'displayName':'Mexican', 'iconUrl':'https://glasseats.appspot.com/static/images/menu_icons/Mexican.png'}], 'id':'mexican'},
